@@ -11,11 +11,12 @@
     <title>Weather App 0.1</title>
 </head>
 <body>
-    <main>
+    <main id="landingPage">
         <section class="weather-info" id="mainContainer">
             <div class="weather-info__search-view" id="weatherSearchView">
                 <label for="searchInput" class="weather-info__search__label">Check weather:</label>
                 <input type="text" id="searchInput">
+                <div class="weather-info__search__Error" id="searchError"></div>
                 <button id="searchButton">search</button>
             </div>
 
@@ -31,6 +32,7 @@
                     <h2 id="weatherCurrentTemp"></h2>
                     <p id="weatherMaxTemp"></p>
                     <p id="weatherMinTemp"></p>
+                    <p id="airPressure"></p>
                 </div>
             </div>
         </section>
