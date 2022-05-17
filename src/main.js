@@ -24,16 +24,18 @@ class WeatherApp {
     }
 
     handleSubmit = () => {
+        this.viewElems.searchError.innerText = "";
+        this.viewElems.searchInput.style.borderColor = "black";
         if (event.type === 'click' || event.key === 'Enter') {
             this.fadeInOut();
             let query = this.viewElems.searchInput.value;
             getWeatherByCity(query).then(data => {
                 this.displayWeatherData(data);
                 this.viewElems.searchInput.value = "";
-                this.viewElems.searchInput.style.borderColor = "black";
-            }).catch(() => {
+            }).catch((error) => {
                 this.fadeInOut();
                 this.viewElems.searchInput.style.borderColor = "red";
+                this.viewElems.searchError.innerText = "There is no such city";
             })
         }
     }
@@ -57,12 +59,14 @@ class WeatherApp {
     }
 
     returnToSearch = () => {
-        this.fadeInOut();    
+        this.fadeInOut();
         
         setTimeout(() => {
             this.switchView();
             this.fadeInOut();
         }, 500);
+
+        this.viewElems.landingPage.style.backgroundImage = "url(" + `../img/bg/main.jpg` + ")";
     }
 
     displayWeatherData = (data) => {
@@ -75,15 +79,18 @@ class WeatherApp {
     
         this.viewElems.weatherCity.innerText = data.title;
         this.viewElems.weatherIcon.src = `https://www.metaweather.com/static/img/weather/${weather.weather_state_abbr}.svg`;
+        this.viewElems.landingPage.style.backgroundImage = "url(" + `../img/bg/${weather.weather_state_abbr}.jpg` + ")";
         this.viewElems.weatherIcon.alt = weather.weather_state_name;
     
         const currTemp = weather.the_temp.toFixed(2);
         const maxTemp = weather.max_temp.toFixed(2);
         const minTemp = weather.min_temp.toFixed(2);
+        const airPressure = weather.air_pressure.toFixed(1);
     
         this.viewElems.weatherCurrentTemp.innerText = `Current temperature: ${currTemp}°C`;
         this.viewElems.weatherMaxTemp.innerText = `Max temperature: ${maxTemp}°C`;
         this.viewElems.weatherMinTemp.innerText = `Min temperature: ${minTemp}°C`;
+        this.viewElems.airPressure.innerText = `Air pressure: ${airPressure} hPa`;
     }
 }
 
